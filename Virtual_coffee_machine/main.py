@@ -1,12 +1,5 @@
 from data import MENU
 
-resources = {
-    "water": 300,
-    "milk": 200,
-    "coffee": 100,
-}
-
-
 
 # Initial resources in the coffee machine
 resources = {
@@ -36,7 +29,8 @@ def is_resource_sufficient(order_ingredients):
             return False
     return True
 
-#Check for coins
+
+#Calculate the coins inserted
 def process_coins():
     """
     Calculate the total amount of money from inserted coins.
@@ -51,7 +45,8 @@ def process_coins():
     total += int(input("How many pennies?: ")) * 0.01
     return total
 
-#Check to see if the user has inserted the coins to buy the drinks
+
+#Check to see if the user has inserted the coins ton buy
 def is_transaction_successful(money_received, drink_cost):
     """
     Check if the user has inserted enough money to buy the drink.
@@ -73,7 +68,8 @@ def is_transaction_successful(money_received, drink_cost):
         print("Sorry that's not enough money. Money refunded.")
         return False
 
-#Manages the ingredients from the machine
+
+#Deduct the ingredients
 def make_coffee(drink_name, order_ingredients):
     """
     Deduct the required ingredients from the machine resources and serve the coffee.
@@ -87,7 +83,7 @@ def make_coffee(drink_name, order_ingredients):
     print(f"Here is your {drink_name} ☕️. Enjoy!")
 
 
-#Handles user input and coffee-making process
+#Handles the user input and coffee-making process
 def coffee_machine():
     """
     Main function to run the coffee machine.
@@ -112,5 +108,4 @@ def coffee_machine():
                     if is_transaction_successful(payment, drink["cost"]):
                         make_coffee(choice, drink["ingredients"])
 
-# Run the coffee machine
 coffee_machine()
