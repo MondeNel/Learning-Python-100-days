@@ -12,9 +12,8 @@ def main():
 
     while is_on:
         options = menu.get_items()
-           print(
-            "You can check the report of how much 'Milk', 'Water', and 'Coffee' is left in the machine. \nBy typing in 'Report!.'"
-        )
+        print(
+            "You can check the report of how much 'Milk', 'Water', and 'Coffee' is left in the machine. \nBy typing in 'Report!.'")
         choice = input(f"What would you like? ({options}): ").lower()
 
         if choice == "off":
