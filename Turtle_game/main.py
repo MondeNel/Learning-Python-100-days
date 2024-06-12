@@ -1,45 +1,17 @@
 
 import turtle
+import random
 
-# Create a turtle object
-t = turtle.Turtle()
-t.speed(1)  # You can set the speed from 1 (slow) to 10 (fastest) or 0 (no animation)
+class RacingTurtle:
+    def __init__(self, color, y_position):
+        self.turtle = turtle.Turtle()
+        self.turtle.color(color)
+        self.turtle.shape("turtle")
+        self.turtle.penup()
+        self.turtle.goto(-230, y_position)
 
+    def move_forward(self):
+        self.turtle.forward(random.randint(1, 10))
 
-# Function to move the turtle forward
-def move_forward():
-    t.forward(20)
-
-# Function to move the turtle backward
-def move_backward():
-    t.backward(20)
-
-# Function to turn the turtle counterclockwise
-def turn_left():
-    t.left(15)
-
-# Function to turn the turtle clockwise
-def turn_right():
-    t.right(15)
-
-# Function to clear the drawing
-def clear_drawing():
-    t.clear()
-
-
-# Create a screen object
-screen = turtle.Screen()
-screen.title("Turtle Control with Keyboard")
-
-# Listen for key presses
-screen.listen()
-
-# Bind key presses to the functions
-screen.onkeypress(move_forward, "w")
-screen.onkeypress(move_backward, "s")
-screen.onkeypress(turn_left, "a")
-screen.onkeypress(turn_right, "d")
-screen.onkeypress(clear_drawing, "c")
-
-# Keep the window open
-screen.mainloop()
+    def get_x_position(self):
+        return self.turtle.xcor()
