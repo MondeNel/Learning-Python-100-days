@@ -26,3 +26,15 @@ def user_move():
 screen = turtle.Screen()
 screen.setup(width=500, height=400)
 screen.title("Turtle Race")
+
+
+# Create the racing turtles
+colors = ["red", "blue", "green", "yellow", "purple"]
+y_positions = [-70, -40, -10, 20, 50]
+turtles = []
+
+for i in range(5):
+    turtles.append(RacingTurtle(colors[i], y_positions[i]))
+
+# User-controlled turtle
+user_turtle = turtles[0]
