@@ -38,3 +38,18 @@ for i in range(5):
 
 # User-controlled turtle
 user_turtle = turtles[0]
+
+# Draw the starting and finishing lines
+start_line = turtle.Turtle()
+start_line.penup()
+start_line.goto(-250, -100)
+start_line.pendown()
+start_line.goto(-250, 100)
+start_line.hideturtle()
+
+finish_line = turtle.Turtle()
+finish_line.penup()
+finish_line.goto(230, -100)
+finish_line.pendown()
+finish_line.goto(230, 100)
+finish_line.hideturtle()
