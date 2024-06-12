@@ -53,3 +53,24 @@ finish_line.goto(230, -100)
 finish_line.pendown()
 finish_line.goto(230, 100)
 finish_line.hideturtle()
+
+# Bind the space key to the user-controlled turtle
+screen.listen()
+screen.onkey(user_move, "space")
+
+# Start the race
+race_on = True
+
+while race_on:
+    for racing_turtle in turtles:
+        if racing_turtle != user_turtle:
+            racing_turtle.move_forward()
+        
+        # Check if any turtle has crossed the finish line
+        if racing_turtle.get_x_position() >= 230:
+            race_on = False
+            winner_color = racing_turtle.turtle.pencolor()
+            print(f"The winner is the {winner_color} turtle!")
+            break
+
+screen.mainloop()
