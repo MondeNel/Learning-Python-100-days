@@ -33,3 +33,13 @@ screen.title("Turtle Control with Keyboard")
 
 # Listen for key presses
 screen.listen()
+
+# Bind key presses to the functions
+screen.onkeypress(move_forward, "w")
+screen.onkeypress(move_backward, "s")
+screen.onkeypress(turn_left, "a")
+screen.onkeypress(turn_right, "d")
+screen.onkeypress(clear_drawing, "c")
+
+# Keep the window open
+screen.mainloop()
