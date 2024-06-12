@@ -54,3 +54,19 @@ class Snake:
         elif self.direction == "right":
             self.head.setheading(0)
 
+# Set up the screen
+screen = turtle.Screen()
+screen.setup(width=600, height=600)
+screen.bgcolor("black")
+screen.title("Snake Game")
+screen.tracer(0)
+
+# Create the snake object
+snake = Snake()
+
+# Keyboard bindings
+screen.listen()
+screen.onkey(snake.up, "Up")
+screen.onkey(snake.down, "Down")
+screen.onkey(snake.left, "Left")
+screen.onkey(snake.right, "Right")
