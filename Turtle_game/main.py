@@ -25,3 +25,11 @@ def turn_right():
 # Function to clear the drawing
 def clear_drawing():
     t.clear()
+
+
+# Create a screen object
+screen = turtle.Screen()
+screen.title("Turtle Control with Keyboard")
+
+# Listen for key presses
+screen.listen()
