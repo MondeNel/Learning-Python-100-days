@@ -70,3 +70,16 @@ screen.onkey(snake.up, "Up")
 screen.onkey(snake.down, "Down")
 screen.onkey(snake.left, "Left")
 screen.onkey(snake.right, "Right")
+
+# Move the snake continuously
+def game_loop():
+    snake.change_direction()
+    snake.move()
+    screen.update()
+    screen.ontimer(game_loop, 100)
+
+# Start the game loop
+game_loop()
+
+# Keep the window open
+screen.mainloop()
