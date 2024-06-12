@@ -1,6 +1,8 @@
-
 import turtle
 import random
+import time
+import tkinter as tk
+from tkinter import messagebox
 
 # Define the RacingTurtle class
 class RacingTurtle:
@@ -10,6 +12,7 @@ class RacingTurtle:
         self.turtle.shape("turtle")
         self.turtle.penup()
         self.turtle.goto(-230, y_position)
+        self.turtle.speed("fastest")
 
     def move_forward(self):
         self.turtle.forward(random.randint(1, 10))
@@ -17,16 +20,47 @@ class RacingTurtle:
     def get_x_position(self):
         return self.turtle.xcor()
 
-# Function to move the user-controlled turtle
 def user_move():
     user_turtle.turtle.forward(10)
 
+def display_countdown():
+    countdown_turtle = turtle.Turtle()
+    countdown_turtle.hideturtle()
+    countdown_turtle.penup()
+    countdown_turtle.goto(0, 0)
+    countdown_turtle.write("3", align="center", font=("Arial", 24, "normal"))
+    time.sleep(1)
+    countdown_turtle.clear()
+    countdown_turtle.write("2", align="center", font=("Arial", 24, "normal"))
+    time.sleep(1)
+    countdown_turtle.clear()
+    countdown_turtle.write("1", align="center", font=("Arial", 24, "normal"))
+    time.sleep(1)
+    countdown_turtle.clear()
+    countdown_turtle.write("Go!", align="center", font=("Arial", 24, "normal"))
+    time.sleep(1)
+    countdown_turtle.clear()
+
+def start_race():
+    display_countdown()
+
+    race_on = True
+
+    while race_on:
+        for racing_turtle in turtles:
+            if racing_turtle != user_turtle:
+                racing_turtle.move_forward()
+
+            if racing_turtle.get_x_position() >= 230:
+                race_on = False
+                winner_color = racing_turtle.turtle.pencolor()
+                print(f"The winner is the {winner_color} turtle!")
+                break
 
 # Set up the screen
 screen = turtle.Screen()
 screen.setup(width=500, height=400)
 screen.title("Turtle Race")
-
 
 # Create the racing turtles
 colors = ["red", "blue", "green", "yellow", "purple"]
@@ -36,8 +70,18 @@ turtles = []
 for i in range(5):
     turtles.append(RacingTurtle(colors[i], y_positions[i]))
 
-# User-controlled turtle
-user_turtle = turtles[0]
+# Let the user select a turtle
+user_choice = screen.textinput("Choose your turtle", "Enter a color (red, blue, green, yellow, purple): ").lower()
+user_turtle = None
+
+for racing_turtle in turtles:
+    if racing_turtle.turtle.color()[0] == user_choice:
+        user_turtle = racing_turtle
+        break
+
+if not user_turtle:
+    print("Invalid choice. Defaulting to the red turtle.")
+    user_turtle = turtles[0]
 
 # Draw the starting and finishing lines
 start_line = turtle.Turtle()
@@ -54,23 +98,14 @@ finish_line.pendown()
 finish_line.goto(230, 100)
 finish_line.hideturtle()
 
-# Bind the space key to the user-controlled turtle
-screen.listen()
-screen.onkey(user_move, "space")
+# Popup for starting the race
+root = tk.Tk()
+root.withdraw()  # Hide the root window
 
-# Start the race
-race_on = True
-
-while race_on:
-    for racing_turtle in turtles:
-        if racing_turtle != user_turtle:
-            racing_turtle.move_forward()
-        
-        # Check if any turtle has crossed the finish line
-        if racing_turtle.get_x_position() >= 230:
-            race_on = False
-            winner_color = racing_turtle.turtle.pencolor()
-            print(f"The winner is the {winner_color} turtle!")
-            break
+if messagebox.askokcancel("Turtle Race", "Click OK to start the race"):
+    display_countdown()
+    screen.listen()
+    screen.onkey(user_move, "space")
+    start_race()
 
 screen.mainloop()
