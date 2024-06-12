@@ -1,4 +1,6 @@
 import turtle
+import tkinter as tk
+from tkinter import messagebox
 
 class Snake:
     def __init__(self):
@@ -8,7 +10,6 @@ class Snake:
         self.direction = "stop"
 
     def create_snake(self):
-        # Initial positions for the snake segments
         initial_positions = [(0, 0), (-20, 0), (-40, 0)]
         for position in initial_positions:
             self.add_segment(position)
@@ -21,7 +22,6 @@ class Snake:
         self.segments.append(segment)
 
     def move(self):
-        # Move each segment to the position of the previous segment, starting from the tail
         for seg_num in range(len(self.segments) - 1, 0, -1):
             new_x = self.segments[seg_num - 1].xcor()
             new_y = self.segments[seg_num - 1].ycor()
@@ -71,15 +71,24 @@ screen.onkey(snake.down, "Down")
 screen.onkey(snake.left, "Left")
 screen.onkey(snake.right, "Right")
 
-# Move the snake continuously
+# Function to start the game loop
 def game_loop():
     snake.change_direction()
     snake.move()
     screen.update()
     screen.ontimer(game_loop, 100)
 
-# Start the game loop
-game_loop()
+# Function to show start message
+def show_start_message():
+    root = tk.Tk()
+    root.withdraw()  # Hide the root window
+    messagebox.showinfo("Snake Game", "Click OK to start the game.")
+    root.destroy()
+    # Start the game loop after the user clicks OK
+    game_loop()
+
+# Show the start message and then start the game
+show_start_message()
 
 # Keep the window open
 screen.mainloop()
