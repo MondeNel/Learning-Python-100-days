@@ -79,6 +79,29 @@ class Snack:
         random_x = random.randint(-280, 280)
         random_y = random.randint(-280, 280)
         self.snack.goto(random_x, random_y)
+    
+class Scoreboard:
+    def __init__(self):
+        self.score = 0
+        self.board = turtle.Turtle()
+        self.board.color("white")
+        self.board.penup()
+        self.board.hideturtle()
+        self.board.goto(0, 260)
+        self.update_scoreboard()
+
+    def update_scoreboard(self):
+        self.board.clear()
+        self.board.write(f"Score: {self.score}", align="center", font=("Arial", 24, "normal"))
+
+    def increase_score(self):
+        self.score += 1
+        self.update_scoreboard()
+
+    def reset(self):
+        self.score = 0
+        self.update_scoreboard()
+
 
 
 '''Sets up the screen with a black background, a title, and a size of 600x600 pixels.
