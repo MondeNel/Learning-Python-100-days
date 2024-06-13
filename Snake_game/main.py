@@ -1,8 +1,19 @@
+'''turtle: Used for creating graphics and the game window.
+    tkinter: Used for creating popup messages.
+    random: Used for generating random positions for the snack.'''
 import turtle
 import tkinter as tk
 from tkinter import messagebox
 import random
 
+
+'''init: Initializes the snake with three segments, sets the head of the snake, and the initial direction to "stop".
+    create_snake: Creates the initial three segments of the snake.
+    add_segment: Adds a new segment to the snake at the specified position.
+    move: Moves the snake forward by updating the position of each segment to the position of the previous segment.
+    grow: Adds a new segment to the snake at the position of the last segment.
+    up, down, left, right: Changes the direction of the snake if the current direction is not opposite.
+    change_direction: Sets the heading of the snake based on the current direction.'''
 class Snake:
     def __init__(self):
         self.segments = []
@@ -60,6 +71,8 @@ class Snake:
             self.head.setheading(0)
 
 
+'''init: Initializes the snack as a red circle and places it at a random position on the screen.
+refresh: Moves the snack to a new random position within the screen bounds.'''
 class Snack:
     def __init__(self):
         self.snack = turtle.Turtle("circle")
@@ -73,6 +86,10 @@ class Snack:
         self.snack.goto(random_x, random_y)
     
 
+'''init: Initializes the scoreboard, sets the initial score to 0, and positions the scoreboard at the top of the screen.
+    update_scoreboard: Clears the previous score and writes the current score on the screen.
+    increase_score: Increases the score by 1 and updates the scoreboard.
+    reset: Resets the score to 0 and updates the scoreboard.'''
 class Scoreboard:
     def __init__(self):
         self.score = 0
@@ -98,7 +115,7 @@ class Scoreboard:
 
 
 '''Sets up the screen with a black background, a title, and a size of 600x600 pixels.
-Disables automatic screen updates for smoother animation.'''
+    Disables automatic screen updates for smoother animation.'''
 # Set up the screen
 screen = turtle.Screen()
 screen.setup(width=600, height=600)
@@ -108,7 +125,7 @@ screen.tracer(0)
 
 
 '''Creates an instance of the Snake class.
-Listens for keyboard input and binds the arrow keys to the snake's direction methods.'''
+    Listens for keyboard input and binds the arrow keys to the snake's direction methods.'''
 # Create the snake, snack, and scoreboard objects
 snake = Snake()
 snack = Snack()
@@ -123,10 +140,13 @@ screen.onkey(snake.left, "Left")
 screen.onkey(snake.right, "Right")
 
 
-'''Updates the snake's direction.
-Moves the snake.
-Updates the screen.
-Repeats the game loop every 100 milliseconds.'''
+'''game_loop: The main game loop which handles snake movement, collision detection, and score updates. It:
+    Changes the snake's direction.
+    Moves the snake.
+    Detects collision with the snack and grows the snake, refreshes the snack, and increases the score if the snake eats the snack.
+    Detects collision with the wall and ends the game with a game-over message if the snake hits the wall.
+    Detects collision with itself and ends the game with a game-over message if the snake hits itself.
+    Updates the screen and sets a timer to call the game loop every 100 milliseconds.'''
 # Function to start the game loop
 def game_loop():
     snake.change_direction()
@@ -157,6 +177,9 @@ def game_loop():
     screen.update()
     screen.ontimer(game_loop, 100)
 
+
+'''show_start_message: 
+    Displays a start message using tkinter's messagebox and starts the game loop after the user clicks OK.'''
 # Function to show start message
 def show_start_message():
     root = tk.Tk()
