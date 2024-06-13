@@ -4,26 +4,17 @@ from tkinter import messagebox
 import random
 
 class Snake:
-    '''Initializes the Snake object with an empty list of segments.
-    Calls create_snake to create the initial snake.
-    Sets the head of the snake to the first segment.
-    Sets the initial direction of the snake to "stop".'''
     def __init__(self):
         self.segments = []
         self.create_snake()
         self.head = self.segments[0]
         self.direction = "stop"
 
-    '''Defines the initial positions of the snake segments.
-    Adds segments to the snake at the initial positions.'''
     def create_snake(self):
         initial_positions = [(0, 0), (-20, 0), (-40, 0)]
         for position in initial_positions:
             self.add_segment(position)
 
-    '''Creates a new turtle segment.
-    Sets the shape, color, and position of the segment.
-    Adds the segment to the list of segments.'''
     def add_segment(self, position):
         segment = turtle.Turtle("square")
         segment.color("white")
@@ -31,8 +22,6 @@ class Snake:
         segment.goto(position)
         self.segments.append(segment)
 
-    '''Moves each segment to the position of the previous segment.
-    Moves the head of the snake forward by 20 units.'''
     def move(self):
         for seg_num in range(len(self.segments) - 1, 0, -1):
             new_x = self.segments[seg_num - 1].xcor()
@@ -40,7 +29,10 @@ class Snake:
             self.segments[seg_num].goto(new_x, new_y)
         self.head.forward(20)
 
-    '''Change the direction of the snake if it is not moving in the opposite direction.'''
+    def grow(self):
+        last_segment_position = self.segments[-1].position()
+        self.add_segment(last_segment_position)
+
     def up(self):
         if self.direction != "down":
             self.direction = "up"
@@ -57,7 +49,6 @@ class Snake:
         if self.direction != "left":
             self.direction = "right"
 
-    '''Changes the heading of the snake's head based on the current direction.'''
     def change_direction(self):
         if self.direction == "up":
             self.head.setheading(90)
@@ -67,6 +58,7 @@ class Snake:
             self.head.setheading(180)
         elif self.direction == "right":
             self.head.setheading(0)
+
 
 class Snack:
     def __init__(self):
@@ -80,6 +72,7 @@ class Snack:
         random_y = random.randint(-280, 280)
         self.snack.goto(random_x, random_y)
     
+
 class Scoreboard:
     def __init__(self):
         self.score = 0
@@ -116,8 +109,11 @@ screen.tracer(0)
 
 '''Creates an instance of the Snake class.
 Listens for keyboard input and binds the arrow keys to the snake's direction methods.'''
-# Create the snake object
+# Create the snake, snack, and scoreboard objects
 snake = Snake()
+snack = Snack()
+scoreboard = Scoreboard()
+
 
 # Keyboard bindings
 screen.listen()
@@ -135,14 +131,32 @@ Repeats the game loop every 100 milliseconds.'''
 def game_loop():
     snake.change_direction()
     snake.move()
+
+    # Detect collision with snack
+    if snake.head.distance(snack.snack) < 15:
+        snack.refresh()
+        snake.grow()
+        scoreboard.increase_score()
+
+    # Detect collision with wall
+    if (
+        snake.head.xcor() > 290 or snake.head.xcor() < -290 or
+        snake.head.ycor() > 290 or snake.head.ycor() < -290
+    ):
+        messagebox.showinfo("Game Over", "You hit the wall! Game Over.")
+        scoreboard.reset()
+        screen.bye()
+
+    # Detect collision with self
+    for segment in snake.segments[1:]:
+        if snake.head.distance(segment) < 10:
+            messagebox.showinfo("Game Over", "You hit yourself! Game Over.")
+            scoreboard.reset()
+            screen.bye()
+
     screen.update()
     screen.ontimer(game_loop, 100)
 
-
-'''Creates a root window and hides it.
-Displays a popup message asking the user to click "OK" to start the game.
-Destroys the root window.
-Starts the game loop.'''
 # Function to show start message
 def show_start_message():
     root = tk.Tk()
@@ -152,9 +166,6 @@ def show_start_message():
     # Start the game loop after the user clicks OK
     game_loop()
 
-
-'''Shows the start message and starts the game.
-Keeps the window open and listens for events.'''
 # Show the start message and then start the game
 show_start_message()
 
