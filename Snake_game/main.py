@@ -1,6 +1,7 @@
 import turtle
 import tkinter as tk
 from tkinter import messagebox
+import random
 
 class Snake:
     '''Initializes the Snake object with an empty list of segments.
@@ -66,6 +67,19 @@ class Snake:
             self.head.setheading(180)
         elif self.direction == "right":
             self.head.setheading(0)
+
+class Snack:
+    def __init__(self):
+        self.snack = turtle.Turtle("circle")
+        self.snack.color("red")
+        self.snack.penup()
+        self.refresh()
+
+    def refresh(self):
+        random_x = random.randint(-280, 280)
+        random_y = random.randint(-280, 280)
+        self.snack.goto(random_x, random_y)
+
 
 '''Sets up the screen with a black background, a title, and a size of 600x600 pixels.
 Disables automatic screen updates for smoother animation.'''
