@@ -70,3 +70,35 @@ class Ball(turtle.Turtle):
     def reset_position(self):
         self.goto(0, 0)
         self.bounce_x()
+
+
+# Step 4: Create the Scoreboard Class
+'''init: Initializes the scoreboard, sets its color, hides the turtle, and initializes scores for both players.
+    update_score: Clears the previous score and writes the current score on the screen.
+    l_point: Increases the left player's score by 1 and updates the scoreboard.
+    r_point: Increases the right player's score by 1 and updates the scoreboard.'''
+
+class Scoreboard(turtle.Turtle):
+    def __init__(self):
+        super().__init__()
+        self.color("white")
+        self.penup()
+        self.hideturtle()
+        self.l_score = 0
+        self.r_score = 0
+        self.update_score()
+
+    def update_score(self):
+        self.clear()
+        self.goto(-100, 200)
+        self.write(self.l_score, align="center", font=("Courier", 24, "normal"))
+        self.goto(100, 200)
+        self.write(self.r_score, align="center", font=("Courier", 24, "normal"))
+
+    def l_point(self):
+        self.l_score += 1
+        self.update_score()
+
+    def r_point(self):
+        self.r_score += 1
+        self.update_score()
