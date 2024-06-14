@@ -36,3 +36,37 @@ class Paddle(turtle.Turtle):
         if new_y > -240:
             self.goto(self.xcor(), new_y)
 
+
+
+
+# Step 3: Create the Ball Class
+'''init: Initializes the ball, sets its shape, color, and initial movement direction.
+    move: Moves the ball in its current direction.
+    bounce_y: Reverses the ball's y-direction when it hits the top or bottom walls.
+    bounce_x: Reverses the ball's x-direction when it hits a paddle.
+    reset_position: Resets the ball to the center and reverses its x-direction after a point is scored.'''
+
+class Ball(turtle.Turtle):
+    def __init__(self):
+        super().__init__()
+        self.shape("circle")
+        self.color("white")
+        self.penup()
+        self.goto(0, 0)
+        self.x_move = 10
+        self.y_move = 10
+
+    def move(self):
+        new_x = self.xcor() + self.x_move
+        new_y = self.ycor() + self.y_move
+        self.goto(new_x, new_y)
+
+    def bounce_y(self):
+        self.y_move *= -1
+
+    def bounce_x(self):
+        self.x_move *= -1
+
+    def reset_position(self):
+        self.goto(0, 0)
+        self.bounce_x()
