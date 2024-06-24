@@ -16,13 +16,26 @@ screen.tracer(0)
 snake = Snake()
 snack = Snack()
 scoreboard = Scoreboard()
+snake_speed = 100  # Set the snake speed to a constant value
 
 # Keyboard bindings
-screen.listen()
-screen.onkey(snake.up, "Up")
-screen.onkey(snake.down, "Down")
-screen.onkey(snake.left, "Left")
-screen.onkey(snake.right, "Right")
+def set_keybindings():
+    screen.listen()
+    screen.onkey(snake.up, "Up")
+    screen.onkey(snake.down, "Down")
+    screen.onkey(snake.left, "Left")
+    screen.onkey(snake.right, "Right")
+
+set_keybindings()
+
+def reset_game():
+    """Reset the game state for a new game."""
+    global snake, snack, scoreboard
+    snake.reset()
+    snack.refresh()
+    scoreboard.update_scoreboard()
+    set_keybindings()
+    game_loop()
 
 # Function to start the game loop
 def game_loop():
@@ -40,19 +53,23 @@ def game_loop():
         snake.head.xcor() > 290 or snake.head.xcor() < -290 or
         snake.head.ycor() > 290 or snake.head.ycor() < -290
     ):
-        messagebox.showinfo("Game Over", "You hit the wall! Game Over.")
-        scoreboard.reset()
-        screen.bye()
+        if messagebox.askyesno("Game Over", "You hit the wall! Do you want to play again?"):
+            scoreboard.reset()
+            reset_game()
+        else:
+            screen.bye()
 
     # Detect collision with self
     for segment in snake.segments[1:]:
         if snake.head.distance(segment) < 10:
-            messagebox.showinfo("Game Over", "You hit yourself! Game Over.")
-            scoreboard.reset()
-            screen.bye()
+            if messagebox.askyesno("Game Over", "You hit yourself! Do you want to play again?"):
+                scoreboard.reset()
+                reset_game()
+            else:
+                screen.bye()
 
     screen.update()
-    screen.ontimer(game_loop, 100)
+    screen.ontimer(game_loop, snake_speed)
 
 # Function to show start message
 def show_start_message():
