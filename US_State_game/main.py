@@ -17,3 +17,11 @@ state_writer.hideturtle()
 
 # Load the CSV data
 data = pd.read_csv("50_states.csv")
+
+
+
+
+
+
+
+screen.exitonclick()
