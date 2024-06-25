@@ -27,17 +27,19 @@ import pandas as pd
 # Read the CSV file using pandas
 data = pd.read_csv("weather_data.csv") # The whole table is a DATAFRAME
 
-# print out the data in a table format
-# print(data)
-
 # Extract the temperatures and convert them to a list of integers
-temperatures = data["temp"].tolist() # day, temp, condition are SERIES
+temperatures = data["temp"] # day, temp, condition are SERIES
 
-# Print the list of temperatures
-# print(temperatures)
+# Calculate the average temperature
+average_temperature = temperatures.mean()
+
+# Print the average temperature
+print(f"The average temperature is {average_temperature:.2f}°C")
+
+
 
 
 
 #Convert Data to a Dictionary
 data_dict = data.to_dict()
-print(data_dict)
+# print(data_dict)
