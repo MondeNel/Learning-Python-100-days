@@ -17,12 +17,31 @@ state_writer.hideturtle()
 
 # Load the CSV data
 data = pd.read_csv("50_states.csv")
+states_dict = {row["state"]: (row["x"], row["y"]) for index, row in data.iterrows()}
 
-# Function to display state on the map
-def mouse_click_coordinates(x, y):
-    print(x, y)
-    
+# Function to move the state name to its position on the map
+def move_state_name(state_name):
+    state_writer.goto(states_dict[state_name])
+    state_writer.write(state_name, align="center", font=("Arial", 8, "normal"))
 
-turtle.onscreenclick(mouse_click_coordinates)
 
+# Function to ask the user for a state name and move it if correct
+def guess_state():
+    user_input = screen.textinput("Guess the State", "Enter a state name (or 'exit' to quit):").title()
+    if user_input == "Exit":
+        return False
+    if user_input in states_dict:
+        move_state_name(user_input)
+    return True
+
+# Keep asking for guesses until the user exits
+while guess_state():
+    pass
+
+
+
+
+
+
+# Kepp the screen open
 turtle.mainloop()
