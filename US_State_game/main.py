@@ -18,10 +18,11 @@ state_writer.hideturtle()
 # Load the CSV data
 data = pd.read_csv("50_states.csv")
 
+# Function to display state on the map
+def mouse_click_coordinates(x, y):
+    print(x, y)
+    
 
+turtle.onscreenclick(mouse_click_coordinates)
 
-
-
-
-
-screen.exitonclick()
+turtle.mainloop()
