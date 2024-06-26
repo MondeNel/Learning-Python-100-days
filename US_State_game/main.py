@@ -34,11 +34,30 @@ def guess_state():
         move_state_name(user_input)
     return True
 
-# Keep asking for guesses until the user exits
-while guess_state():
-    pass
+# Timer
+timer = 300  # 5 minutes in seconds
+start_time = time.time()
 
+# Score
+score = 0
 
+# Main game loop
+while True:
+    # Update the timer
+    remaining_time = timer - (time.time() - start_time)
+    if remaining_time <= 0:
+        break  # Time's up, end the game
+
+    # Update the screen title with the remaining time
+    screen.title(f"U.S. States Game - Time: {int(remaining_time)}s - Score: {score}/50")
+
+    # Ask for a guess
+    if guess_state():
+        score += 1
+
+# Game over
+screen.title("U.S. States Game - Game Over")
+screen.textinput("Game Over", "Time's up! Press 'OK' to exit.")
 
 
 
