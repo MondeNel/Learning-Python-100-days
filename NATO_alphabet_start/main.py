@@ -8,35 +8,20 @@ for (key, value) in student_dict.items():
     #Access key and value
     pass
 
-import pandas
-student_data_frame = pandas.DataFrame(student_dict)
+import pandas as pd
+student_data_frame = pd.DataFrame(student_dict)
 
-#Loop through rows of a data frame
-for (index, row) in student_data_frame.iterrows():
-    #Access index and row
-    #Access row.student or row.score
-    pass
+# Load the CSV file into a DataFrame
+data = pd.read_csv("nato_phonetic_alphabet.csv")
 
-# Keyword Method with iterrows()
-# {new_key:new_value for (index, row) in df.iterrows()}
+# Create the dictionary using dictionary comprehension
+phonetic_dict = {row.letter: row.code for (index, row) in data.iterrows()}
+print(phonetic_dict)
 
-#TODO 1. Create a dictionary in this format:
-nato_phonetic_alphabet = {
-    "A": "Alfa", "B": "Bravo", "C": "Charlie", "D": "Delta", "E": "Echo", 
-    "F": "Foxtrot", "G": "Golf", "H": "Hotel", "I": "India", "J": "Juliett", 
-    "K": "Kilo", "L": "Lima", "M": "Mike", "N": "November", "O": "Oscar", 
-    "P": "Papa", "Q": "Quebec", "R": "Romeo", "S": "Sierra", "T": "Tango", 
-    "U": "Uniform", "V": "Victor", "W": "Whiskey", "X": "X-ray", "Y": "Yankee", 
-    "Z": "Zulu"
-}
-
-print(nato_phonetic_alphabet)
-
-#TODO 2. Create a list of the phonetic code words from a word that the user inputs.
-# Function to convert user input to phonetic code words
+# Step 2: Function to generate phonetic code words from user input
 def generate_phonetic():
     word = input("Enter a word: ").upper()  # Convert input to uppercase to match dictionary keys
-    phonetic_code_words = [nato_phonetic_alphabet[letter] for letter in word if letter in nato_phonetic_alphabet]
+    phonetic_code_words = [phonetic_dict[letter] for letter in word if letter in phonetic_dict]
     print(phonetic_code_words)
 
 # Call the function to generate and print phonetic code words
