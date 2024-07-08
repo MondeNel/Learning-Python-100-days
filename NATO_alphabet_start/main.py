@@ -33,4 +33,11 @@ nato_phonetic_alphabet = {
 print(nato_phonetic_alphabet)
 
 #TODO 2. Create a list of the phonetic code words from a word that the user inputs.
+# Function to convert user input to phonetic code words
+def generate_phonetic():
+    word = input("Enter a word: ").upper()  # Convert input to uppercase to match dictionary keys
+    phonetic_code_words = [nato_phonetic_alphabet[letter] for letter in word if letter in nato_phonetic_alphabet]
+    print(phonetic_code_words)
 
+# Call the function to generate and print phonetic code words
+generate_phonetic()
