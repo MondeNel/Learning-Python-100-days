@@ -20,6 +20,7 @@ LONG_BREAK_MIN = 20
 
 window = Tk()
 window.title("Pomodoro")
+window.config(padx=100, pady=50)
 
 # Canvas for tomato image
 canvas = Canvas(width=200, height=224, bg=YELLOW, highlightthickness=0)
