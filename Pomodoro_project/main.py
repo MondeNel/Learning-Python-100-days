@@ -10,7 +10,8 @@ YELLOW = "#f7f5dd"
 # Define font and timer intervals (in minutes)
 FONT_NAME = "Courier"
 WORK_MIN = 25
-BREAK_MIN = 5  # Both short and long breaks are now 5 minutes
+SHORT_BREAK_MIN = 5
+LONG_BREAK_MIN = 5  # Setting both short and long breaks to 5 minutes
 
 # ---------------------------- TIMER RESET ------------------------------- #
 def reset_timer():
@@ -21,6 +22,7 @@ def reset_timer():
     window.after_cancel(timer)
     canvas.itemconfig(timer_text, text="00:00")
     timer_label.config(text="Timer", fg=GREEN)
+    window.config(bg=YELLOW)
     check_marks.config(text="")
     global reps
     reps = 0
@@ -35,14 +37,24 @@ def start_timer():
     reps += 1
 
     work_sec = WORK_MIN * 60
-    break_sec = BREAK_MIN * 60
+    short_break_sec = SHORT_BREAK_MIN * 60
+    long_break_sec = LONG_BREAK_MIN * 60
 
-    if reps % 2 == 0:
-        count_down(break_sec)
+    if reps % 8 == 0:
+        count_down(long_break_sec)
+        timer_label.config(text="Break", fg=RED)
+        window.title("Break Time!")
+        window.config(bg=RED)
+    elif reps % 2 == 0:
+        count_down(short_break_sec)
         timer_label.config(text="Break", fg=PINK)
+        window.title("Break Time!")
+        window.config(bg=PINK)
     else:
         count_down(work_sec)
         timer_label.config(text="Work", fg=GREEN)
+        window.title("Work Time!")
+        window.config(bg=YELLOW)
 
 # ---------------------------- COUNTDOWN MECHANISM ------------------------------- #
 def count_down(count):
