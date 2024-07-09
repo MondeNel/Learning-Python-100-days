@@ -80,6 +80,11 @@ start_button.grid(column=0, row=2)
 reset_button = Button(text="Reset", highlightthickness=0, command=reset_timer)
 reset_button.grid(column=2, row=2)
 
+# Create and place the check marks label
+check_marks = Label(fg=GREEN, bg=YELLOW)
+check_marks.grid(column=1, row=3)
+
+
 
 
 
