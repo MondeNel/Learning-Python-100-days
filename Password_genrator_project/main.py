@@ -23,8 +23,6 @@ def generate_password():
     password_entry.delete(0, END)
     password_entry.insert(0, password)
 
-
-# ---------------------------- SAVE PASSWORD ------------------------------- #
 # ---------------------------- SAVE PASSWORD ------------------------------- #
 def save_password():
     """
@@ -51,8 +49,7 @@ def save_password():
 # Set up the main window
 window = Tk()
 window.title("Password Manager")
-window.config(padx=20, pady=20)
-
+window.config(padx=50, pady=50)
 
 # Create and place the canvas with the logo image
 canvas = Canvas(width=200, height=200, highlightthickness=0)
@@ -78,14 +75,11 @@ email_entry.insert(0, "example@example.com")
 password_entry = Entry(width=21)
 password_entry.grid(column=1, row=3)
 
-
 # Buttons
 generate_password_button = Button(text="Generate Password", command=generate_password)
-generate_password_button.grid(column=2, row=3)
+generate_password_button.grid(column=2, row=3, padx=5)
 add_button = Button(text="Add", width=36, command=save_password)
-add_button.grid(column=1, row=4, columnspan=2)
+add_button.grid(column=1, row=4, columnspan=2, sticky="EW")
 
-
-
-
+# Keep the window open and start the Tkinter event loop
 window.mainloop()
